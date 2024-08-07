@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+	<head>
+	  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+<title></title></head>
+	<body ng-app="myApp">
+		<h1>AngularJS Front-End: </h1>
+
+		<div ng-controller="myController">
+			<input type="button" value="Inserir dados" ng-click="postStudent()" />
+			<br />				
+			<br />
+			Response Data: {{dados}}<br /> <br />
+					Error: {{error}}
+		</div>
+		<script>
+		    var myApp = angular.module('myApp', []);
+	   	
+			myApp.controller("myController", function ($scope, $http) {
+				var onSuccess = function successCallback(response) {$scope.dados = response.data;}
+
+				var onError = function errorCallback(response) {$scope.error = response;}
+			
+				var postReq = {
+						method: 'POST',
+						url   : 'http://localhost:8080/student',
+						data  :	{  
+									age: 29,
+									email: 'maria@gmail.com',
+									name: 'Maria'
+								}   
+					};
+			
+				$scope.postStudent = function () {
+					$http(postReq).then(onSuccess, onError);
+				};
+
+			});
+		</script>
+
+	</body>
+</html>

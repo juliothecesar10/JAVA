@@ -1,0 +1,43 @@
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+    <head>
+        <meta charset="UTF-8">
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+
+        <title></title>
+	</head>
+    <body>
+		<div id="app">
+
+			<input type="button" value="Pegar dados" @click="handleClick" />
+			<br />				
+			<br />
+			Response Data: {{ info }} <br /> <br />
+
+		</div>
+        <script>
+			new Vue({
+			  el: '#app',
+			  data :{
+				  info: null,
+				  loading: true,
+				  errored: false
+			  },
+			  methods: {
+				handleClick: function() {
+					axios.get('http://localhost:8080/student')
+						 .then(response => {
+							this.info = response.data
+						  })
+						 .catch(error => {
+							console.log(error)
+							this.errored = true
+						  })
+						 .finally(() => this.loading = false)
+						}
+			  }
+			})
+        </script>
+    </body>
+</html>
